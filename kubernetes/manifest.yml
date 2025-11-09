@@ -2,33 +2,34 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: amazon-prime-video-deployment
+  name: mubarek-prime-video-deployment
 spec:
   replicas: 2
   strategy:
     type: RollingUpdate
   selector:
     matchLabels:
-      app: amazon-prime-video
+      app: mubarek-prime-video
   template:
     metadata:
       labels:
-        app: amazon-prime-video
+        app: mubarek-prime-video
     spec:
       containers:
-      - name: amazon-prime-video-container
-        image: aseemakram19/amazon-prime-video
+      - name: mubarek-prime-video-container
+        image: maol2ga/amazon-prime-video:latest   # ✅ your DockerHub repo
         ports:
         - containerPort: 3000
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: amazon-prime-video-service
+  name: mubarek-prime-video-service
 spec:
   type: LoadBalancer
   selector:
-    app: amazon-prime-video
+    app: mubarek-prime-video
   ports:
   - port: 80
     targetPort: 3000
+
