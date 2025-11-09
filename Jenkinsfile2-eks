@@ -16,23 +16,25 @@ pipeline {
 
         stage('Deploy to EKS Cluster') {
             steps {
-                // use your AWS credentials securely
+                // Use AWS credentials securely
                 withAWS(credentials: 'aws-eks-creds', region: 'us-west-2') {
                     dir('kubernetes') {
                         sh '''
-                        echo "Verifying AWS credentials..."
+                        set -e  # stop on first error
+                        echo "🔹 Verifying AWS credentials..."
                         aws sts get-caller-identity
 
-                        echo "Configuring kubectl for EKS cluster..."
+                        echo "🔹 Configuring kubectl for EKS cluster..."
                         aws eks update-kubeconfig --region us-west-2 --name muba-eks-cluster
 
-                        echo "Verifying kubeconfig..."
-                        kubectl config view
+                        echo "🔹 Verifying kubeconfig..."
+                        kubectl config current-context
+                        kubectl get nodes || echo "⚠️ No nodes found (check cluster connection)"
 
-                        echo "Deploying application to EKS..."
+                        echo "🔹 Deploying application to EKS..."
                         kubectl apply -f manifest.yml
 
-                        echo "Verifying deployment..."
+                        echo "🔹 Verifying deployment..."
                         kubectl get pods -o wide
                         kubectl get svc
                         '''
@@ -63,3 +65,4 @@ pipeline {
         }
     }
 }
+
