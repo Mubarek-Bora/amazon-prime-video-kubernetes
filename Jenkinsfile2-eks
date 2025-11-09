@@ -8,31 +8,32 @@ pipeline {
             }
         }
 
-        stage('Checkout from Git') {
+        stage('Checkout from GitHub') {
             steps {
                 git branch: 'main', url: 'https://github.com/Mubarek-Bora/amazon-prime-video-kubernetes.git'
             }
-        }        
+        }
 
         stage('Deploy to EKS Cluster') {
             steps {
-                dir('kubernetes') {
-                    script {
+                // use your AWS credentials securely
+                withAWS(credentials: 'aws-eks-creds', region: 'us-west-2') {
+                    dir('kubernetes') {
                         sh '''
                         echo "Verifying AWS credentials..."
                         aws sts get-caller-identity
 
                         echo "Configuring kubectl for EKS cluster..."
-                        aws eks update-kubeconfig --region ap-south-1 --name Cloudaseem
+                        aws eks update-kubeconfig --region us-west-2 --name muba-eks-cluster
 
                         echo "Verifying kubeconfig..."
                         kubectl config view
 
                         echo "Deploying application to EKS..."
                         kubectl apply -f manifest.yml
-                        
+
                         echo "Verifying deployment..."
-                        kubectl get pods
+                        kubectl get pods -o wide
                         kubectl get svc
                         '''
                     }
@@ -45,26 +46,20 @@ pipeline {
         always {
             script {
                 def buildStatus = currentBuild.currentResult
-                def buildUser = currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause')[0]?.userId ?: 'GitHub User'
-                
-                emailext (
+                emailext(
                     subject: "Pipeline ${buildStatus}: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                     body: """
-                        <p>This is a Jenkins amazon-prime-video CICD pipeline status.</p>
                         <p><strong>Project:</strong> ${env.JOB_NAME}</p>
                         <p><strong>Build Number:</strong> ${env.BUILD_NUMBER}</p>
                         <p><strong>Build Status:</strong> ${buildStatus}</p>
-                        <p><strong>Started by:</strong> ${buildUser}</p>
                         <p><strong>Build URL:</strong> <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
                     """,
                     to: 'maol2ga@gmail.com',
                     from: 'maol2ga@gmail.com',
                     replyTo: 'maol2ga@gmail.com',
-                    mimeType: 'text/html',
-                    attachmentsPattern: 'trivyfs.txt,trivyimage.txt'
+                    mimeType: 'text/html'
                 )
             }
         }
     }
 }
-
