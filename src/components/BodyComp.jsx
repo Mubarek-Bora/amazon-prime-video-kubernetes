@@ -8,7 +8,6 @@ function BodyComp() {
     <div>
       <HomeCarousel />
       <ContentCarousel />
-      <ContentCarousel />
     </div>
   );
 }

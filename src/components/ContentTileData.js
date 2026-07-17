@@ -14,7 +14,7 @@ const abc = [
     Country: "USA, UK",
     Awards: "Won 3 Oscars. Another 80 wins & 121 nominations.",
     poster:
-      "https://posters.movieposterdb.com/23_01/2009/499549/l_avatar-movie-poster_c111a145.png",
+      "https://images-na.ssl-images-amazon.com/images/M/MV5BMjEyOTYyMzUxNl5BMl5BanBnXkFtZTcwNTg0MTUzNA@@._V1_SX1500_CR0,0,1500,999_AL_.jpg",
     Metascore: "83",
     imdbRating: "7.9",
     imdbVotes: "890,617",
@@ -107,7 +107,7 @@ const abc = [
     Country: "USA",
     Awards: "Nominated for 1 Oscar. Another 34 wins & 75 nominations.",
     poster:
-      "https://posters.movieposterdb.com/12_01/2012/848228/l_848228_df20a875.jpg",
+      "https://images-na.ssl-images-amazon.com/images/M/MV5BMTA0NjY0NzE4OTReQTJeQWpwZ15BbWU3MDczODg2Nzc@._V1_SX1777_CR0,0,1777,999_AL_.jpg",
     Metascore: "69",
     imdbRating: "8.1",
     imdbVotes: "1,003,301",
