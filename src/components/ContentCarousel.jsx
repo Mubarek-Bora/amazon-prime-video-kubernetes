@@ -6,7 +6,7 @@ import LeftArrowButton from "./LeftArrowButton";
 import RightArrowButton from "./RightArrowButton";
 
 function abc(data) {
-  return <ContentTile poster={data.poster} />;
+  return <ContentTile poster={data.poster} title={data.Title} />;
 }
 
 function ContentCarousel() {

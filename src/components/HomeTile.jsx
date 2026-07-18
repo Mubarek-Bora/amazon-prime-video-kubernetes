@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import backimg from "../images/7ec0559f-6180-4b29-becd-0f12f702ec5c._UR3840,1440_SX1440_FMjpg_.jpeg";
+import { useTrailer } from "../TrailerContext";
 
 function ListItem(props) {
+  const { openTrailer } = useTrailer();
   // const [isVisible, setisVisible] = useState(false);
 
   // function ObserveFirstChild(event) {
@@ -93,7 +95,14 @@ function ListItem(props) {
                 <div className="home-tile-details-buttons-play-div1">
                   <div className="home-tile-details-buttons-play-div2 ">
                     <label className="home-tile-details-buttons-play-label">
-                      <a className="home-tile-details-buttons-play-a" href="">
+                      <a
+                        className="home-tile-details-buttons-play-a"
+                        href="#play"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          openTrailer(props.title);
+                        }}
+                      >
                         <svg
                           className="_22qEau"
                           viewBox="0 0 80 80"

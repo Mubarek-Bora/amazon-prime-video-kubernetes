@@ -130,6 +130,7 @@ function HomeCarousel() {
                 <HomeTile
                   key={listitem.id}
                   id={listitem.id}
+                  title={listitem.Title}
                   poster={listitem.poster}
                   released={listitem.released}
                   rated={listitem.rated}

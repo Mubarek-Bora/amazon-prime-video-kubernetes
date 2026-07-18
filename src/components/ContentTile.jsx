@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
+import { useTrailer } from "../TrailerContext";
 
 function ContentTile(props) {
+  const { openTrailer } = useTrailer();
   const [isHovering, setIsHovering] = useState(false);
   // function handleMouseOver() {
   //   setIsHovering(true);
@@ -24,7 +26,10 @@ function ContentTile(props) {
     >
       <article>
         <section style={{ zIndex: 2 }}>
-          <div>
+          <div
+            onClick={() => openTrailer(props.title)}
+            style={{ position: "relative", cursor: "pointer" }}
+          >
             <img
               style={{
                 height: 140,
@@ -34,15 +39,26 @@ function ContentTile(props) {
               src={props.poster}
               alt="poster"
             ></img>
-            {/* {isHovering && (
-              <article>
-                <div></div>
-                <section></section>
-                <h4>abc</h4>
-                <section></section>
-                <div></div>
-              </article>
-            )} */}
+            {isHovering && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  background: "rgba(0,0,0,0.4)",
+                  borderRadius: 8,
+                  color: "#fff",
+                  fontSize: 40,
+                }}
+              >
+                ▶
+              </div>
+            )}
           </div>
         </section>
       </article>
